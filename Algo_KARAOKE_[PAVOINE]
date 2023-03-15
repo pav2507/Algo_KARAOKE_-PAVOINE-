@@ -1,0 +1,77 @@
+## création d'une classe pour les joueurs ##
+class Player:    
+    def __init__(self, name): 
+        self.__nom = name
+        self.__musiques = {
+            0: 0,
+            1: 0,
+            2: 0,
+            3: 0,
+            4: 0
+        }
+
+    def add_musiques(self, nom_musique, score):
+        if score > self.__musiques[nom_musique]:
+            self.__musiques[nom_musique] = score
+
+    def get_best_score(self):
+        return max(self.__musiques.values())
+
+    def get_worst_score(self):
+        return min([score for score in self.__musiques.values() if score > 0], default=50)
+
+    def get_average_score(self):
+        total = sum([score for score in self.__musiques.values() if score > 0])
+        count = len([score for score in self.__musiques.values() if score > 0])
+        return total / count if count > 0 else 0
+
+
+
+## creation classe pour definir le jeu 
+class Karaoke: 
+    def __init__(self, songs):
+        self.players = []
+        self.songs = songs
+
+    def add_player(self, player):
+        self.players.append(player)
+
+    def remove_player(self, player):
+        if len(self.players) > 1:
+            self.players.remove(player)
+
+    def get_best_score(self, song_id):
+        best_score = 0
+        for player in self.players:
+            score = player.musiques[song_id]
+            if score > best_score:
+                best_score = score
+        return best_score
+
+    def get_best_score_total(self):
+        best_score_total = 0
+        for player in self.players:
+            score_total = sum(player.musiques.values())
+            if score_total > best_score_total:
+                best_score_total = score_total
+        return best_score_total
+
+    def get_best_average(self):
+        best_average = 0
+        for player in self.players:
+            average = player.get_average_score()
+            if average > best_average:
+                best_average = average
+        return best_average
+## création d'un objet Karaoke avec 3 chansons
+karaoke = Karaoke(['chanson 1', 'chanson 2', 'chanson 3'])       
+
+
+
+
+
+
+
+
+
+ 
